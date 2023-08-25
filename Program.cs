@@ -5,11 +5,10 @@ namespace ToDo
 {
     internal class Program
     {
-        public static List<string> TaskList { get; set; }
+        public static List<string> TaskList { get; set; } = new List<string>();
 
         static void Main(string[] args)
         {
-            TaskList = new List<string>();
             int variable = 0;
             do
             {
@@ -43,6 +42,7 @@ namespace ToDo
 
             // Read line
             string line = Console.ReadLine();
+
             return Convert.ToInt32(line);
         }
 
@@ -56,29 +56,34 @@ namespace ToDo
                 string line = Console.ReadLine();
                 // Remove one position
                 int indexToRemove = Convert.ToInt32(line) - 1;
+                
+
+                if (TaskList?.Count < 0)
+                    Console.WriteLine("Ingrese un id valido");
+
                 if (indexToRemove > -1 && TaskList.Count > 0)
                 {
                     string task = TaskList[indexToRemove];
                     TaskList.RemoveAt(indexToRemove);
-                    Console.WriteLine("Tarea " + task + " eliminada");
+                    Console.WriteLine($"Tarea {task} eliminada");
                 }
             }
             catch (Exception)
             {
+                Console.WriteLine("Ha ocurrido un error");
             }
         }
 
         public static void ShowMenuAdd()
         {
-            try
-            {
-                Console.WriteLine("Ingrese el nombre de la tarea: ");
-                string task = Console.ReadLine();
+            Console.WriteLine("Ingrese el nombre de la tarea: ");
+            string task = Console.ReadLine();
+            if (task != ""){
                 TaskList.Add(task);
                 Console.WriteLine("Tarea registrada");
             }
-            catch (Exception)
-            {
+            else{
+                Console.WriteLine("Dato invalido");
             }
         }
 
@@ -98,7 +103,7 @@ namespace ToDo
         {
                 Console.WriteLine("----------------------------------------");
                 int indexTaskList = 0;
-                TaskList.ForEach(p=> Console.WriteLine(++indexTaskList + ". " + p));
+                TaskList.ForEach(p=> Console.WriteLine($"{++indexTaskList} . {p}"));
 
                 Console.WriteLine("----------------------------------------");
         }
